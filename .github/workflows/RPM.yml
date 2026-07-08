@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - upload/**
+    paths:
+      - incoming/rpm/**
 
 jobs:
   update:
