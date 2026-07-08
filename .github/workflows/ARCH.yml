@@ -1,0 +1,62 @@
+name: Update Pacman Repos
+on:
+  push:
+    branches:
+      - upload/**
+    paths:
+      - incoming/arch/**
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    concurrency:
+      group: software-repository
+      cancel-in-progress: false
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Check push
+        run: |
+          for file in $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          do
+            case "$file" in
+              incoming/*)
+                ;;
+              *)
+                echo "Illegal change: $file"
+                exit 1
+                ;;
+            esac
+          done
+      
+      - name: Get Software Name
+        run: echo "SOFTWARE_NAME=$(cat incoming/software_name)" >> "$GITHUB_ENV"
+      
+      - name: Build Repos
+        uses: RAT-ISET/release-action/release/repos/arch@main
+        with:
+          arch_repos_path: x86_64
+          software_name: ${{ env.SOFTWARE_NAME }}
+          gpg_key: ${{ secrets.GPG_KEY }}
+          gpg_key_id: ${{ secrets.GPG_KEY_ID }}
+      
+      - name: Merge Repos
+        run: |
+          rm -rf incoming
+          git add .
+          git checkout main
+          git pull --rebase origin main
+          git commit -m "ci(arch): Update the RPM Repository"
+          BRANCH=${GITHUB_REF#refs/heads/}
+          git merge ${BRANCH} --no-edit
+          git push origin main
+          git push origin --delete ${BRANCH}
