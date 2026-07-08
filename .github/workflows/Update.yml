@@ -51,7 +51,7 @@ jobs:
 
       - name: Install Tools ( Debian )
         run: apt install apt-utils gzip xz -y
-      
+
       - name: Generate the Package Repo ( Debian )
         working-directory: deb
         run: apt-ftparchive generate repo.conf
@@ -84,6 +84,9 @@ jobs:
           software_name: ${{ env.SOFTWARE_NAME }}
           gpg_key: ${{ secrets.GPG_KEY }}
           gpg_key_id: ${{ secrets.GPG_KEY_ID }}
+      
+      - name: Change Redirect Rules
+        run: ${{ github.workspace }}/replace.sh $(cat incoming/redirect_line.txt)
       
       - name: Merge Repos
         run: |
