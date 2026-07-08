@@ -74,12 +74,12 @@ jobs:
           gpg --batch --yes \
             --default-key ${{ secrets.GPG_KEY_ID }} \
             --detach-sign \
-            --o ./Release.gpg \
+            -o ./Release.gpg \
             ./Release
           gpg --batch --yes \
             --default-key ${{ secrets.GPG_KEY_ID }} \
             --detach-sign \
-            --o ./InRelease \
+            -o ./InRelease \
             ./Release
       
       - name: Build Repos ( ARCH )
