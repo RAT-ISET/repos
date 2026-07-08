@@ -42,6 +42,42 @@ jobs:
         run: echo "SOFTWARE_NAME=$(cat incoming/software_name)" >> "$GITHUB_ENV"
       
       - name: Build Repos
+        uses: RAT-ISET/release-action/release/repos/rpm@main
+        with:
+          rpm_repos_path: x86_64
+          gpg_key: ${{ secrets.GPG_KEY }}
+          gpg_key_id: ${{ secrets.GPG_KEY_ID }}
+      
+
+      - name: Install Tools ( Debian )
+        run: apt install apt-utils gzip xz -y
+      
+      - name: Generate the Package Repo ( Debian )
+        working-directory: deb
+        run: apt-ftparchive generate repo.conf
+      
+      - name: Release the Package Repo ( Debian )
+        working-directory: deb
+        run: apt-ftparchive -c release.conf release dists/stable > dists/stable/Release
+      
+      - name: Sign the Repo ( Debian )
+        working-directory: deb/dists/stable
+        run: |
+          echo "${{ secrets.GPG_KEY }}" | base64 -d > /tmp/private.key
+          gpg --batch --import /tmp/private.key
+          rm /tmp/private.key
+          gpg --batch --yes \
+            --default-key ${{ secrets.GPG_KEY_ID }} \
+            --detach-sign \
+            --o ./Release.gpg \
+            ./Release
+          gpg --batch --yes \
+            --default-key ${{ secrets.GPG_KEY_ID }} \
+            --detach-sign \
+            --o ./InRelease \
+            ./Release
+      
+      - name: Build Repos ( ARCH )
         uses: RAT-ISET/release-action/release/repos/arch@main
         with:
           arch_repos_path: x86_64
