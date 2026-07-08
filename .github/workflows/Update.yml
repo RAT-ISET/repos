@@ -1,4 +1,4 @@
-name: Update Pacman Repos
+name: Update Repos
 on:
   push:
     branches:
@@ -37,17 +37,22 @@ jobs:
                 ;;
             esac
           done
+
+      - name: Create Directory
+        run: mkdir -p deb/dists/stable rpm arch
       
       - name: Get Software Name
         run: echo "SOFTWARE_NAME=$(cat incoming/software_name)" >> "$GITHUB_ENV"
       
-      - name: Build Repos
+      - name: Build Repos ( RPM )
         uses: RAT-ISET/release-action/release/repos/rpm@main
         with:
           rpm_repos_path: x86_64
           gpg_key: ${{ secrets.GPG_KEY }}
           gpg_key_id: ${{ secrets.GPG_KEY_ID }}
       
+      - name: Upload Package ( Debian )
+        run: cp -a incoming/deb/* deb/
 
       - name: Install Tools ( Debian )
         run: apt install apt-utils gzip xz -y
