@@ -1,0 +1,47 @@
+name: Update DNF Repos
+on:
+  push:
+    branches:
+      - upload/**
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Check push
+        run: |
+          for file in $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          do
+            case "$file" in
+              incoming/*)
+                ;;
+              *)
+                echo "Illegal change: $file"
+                exit 1
+                ;;
+            esac
+          done
+      
+      - name: Build Repos
+        uses: RAT-ISET/release-action/release/repos/rpm@main
+        with:
+          rpm_repos_path: x86_64
+      
+      - name: Merge repos
+        run: |
+          git checkout main
+          git pull origin main
+          BRANCH=${GITHUB_REF#refs/heads/}
+          git merge ${BRANCH} --no-edit
+          git push origin main
+          git push origin --delete ${BRANCH}
