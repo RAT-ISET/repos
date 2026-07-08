@@ -38,6 +38,8 @@ jobs:
         uses: RAT-ISET/release-action/release/repos/rpm@main
         with:
           rpm_repos_path: x86_64
+          gpg_key: ${{ secrets.GPG_KEY }}
+          gpg_key_id: ${{ secrets.GPG_KEY_ID }}
       
       - name: Merge repos
         run: |
