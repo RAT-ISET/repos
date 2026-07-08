@@ -55,7 +55,7 @@ jobs:
         run: cp -a incoming/deb/* deb/
 
       - name: Install Tools ( Debian )
-        run: sudo apt install apt-utils gzip xz -y
+        run: sudo apt install apt-utils gzip xz-utils -y
 
       - name: Generate the Package Repo ( Debian )
         working-directory: deb
