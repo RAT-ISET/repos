@@ -91,7 +91,7 @@ jobs:
           gpg_key_id: ${{ secrets.GPG_KEY_ID }}
       
       - name: Change Redirect Rules
-        run: bash ${{ github.workspace }}/replace.sh $(cat incoming/redirect_line.txt)
+        run: bash ${{ github.workspace }}/replace.sh "$(cat incoming/redirect_line.txt)" _redirects
       
       - name: Merge Repos
         run: |
