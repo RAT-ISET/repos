@@ -1,0 +1,1 @@
+/software/parabolic-antenna-calculator/* https://github.com/RAT-ISET/parabolic-antenna-calculator/releases/download/test-13/:splat 302
