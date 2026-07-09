@@ -99,8 +99,8 @@ jobs:
           git config --global user.name "Ecliptic ISET ( Bot )"
           git config --global user.email "ecliptic@ratiset.org"
           git add .
+          git commit -m "ci(arch): Update the Repository"
           git checkout main
-          git commit -m "ci(arch): Update the RPM Repository"
           git pull --rebase origin main
           BRANCH=${GITHUB_REF#refs/heads/}
           git merge ${BRANCH} --no-edit
