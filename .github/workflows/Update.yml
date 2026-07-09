@@ -96,6 +96,8 @@ jobs:
       - name: Merge Repos
         run: |
           rm -rf incoming
+          git config --global user.name "Ecliptic ISET ( Bot )"
+          git config --global user.email "ecliptic@ratiset.org"
           git add .
           git checkout main
           git commit -m "ci(arch): Update the RPM Repository"
