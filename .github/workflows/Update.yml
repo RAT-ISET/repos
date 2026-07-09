@@ -37,12 +37,12 @@ jobs:
                 ;;
             esac
           done
-
-      - name: Create Directory
-        run: mkdir -p deb/dists/stable rpm arch
       
       - name: Get Software Name
         run: echo "SOFTWARE_NAME=$(cat incoming/software_name)" >> "$GITHUB_ENV"
+
+      - name: Create Directory
+        run: mkdir -p deb/dists/stable rpm arch
       
       - name: Build Repos ( RPM )
         uses: RAT-ISET/release-action/release/repos/rpm@main
@@ -52,7 +52,7 @@ jobs:
           gpg_key_id: ${{ secrets.GPG_KEY_ID }}
       
       - name: Upload Package ( Debian )
-        run: cp -a incoming/deb/* deb/
+        run: cp -a incoming/deb/. deb/
 
       - name: Install Tools ( Debian )
         run: sudo apt install apt-utils gzip xz-utils -y
