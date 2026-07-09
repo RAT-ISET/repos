@@ -98,8 +98,8 @@ jobs:
           rm -rf incoming
           git add .
           git checkout main
-          git pull --rebase origin main
           git commit -m "ci(arch): Update the RPM Repository"
+          git pull --rebase origin main
           BRANCH=${GITHUB_REF#refs/heads/}
           git merge ${BRANCH} --no-edit
           git push origin main
