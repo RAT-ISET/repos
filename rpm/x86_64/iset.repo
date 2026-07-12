@@ -1,0 +1,8 @@
+[iset]
+name=Team ISET Repository
+baseurl=https://repos.ratiset.org/rpm/x86_84/
+enabled=1
+gpgcheck=1
+gpgkey=https://repos.ratiset.org/rpm/RPM-GPG-KEY-ISET
+
+repo_gpgcheck=1
