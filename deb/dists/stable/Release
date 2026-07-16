@@ -2,17 +2,17 @@ Acquire-By-Hash: yes
 Architectures: amd64
 Codename: main
 Components: main
-Date: Sun, 12 Jul 2026 10:53:17 +0000
+Date: Thu, 16 Jul 2026 02:00:40 +0000
 Description: The Debian package repository that provided by Team ISET.
 Label: Team ISET Software Repository
 Origin: Team ISET
 Suite: stable
 Version: 1.0
 MD5Sum:
- 9d8356f59d08504ba9e01ec7a79d54c3              265 Release
+ 71b8ce05d194aa20e6b6b20b7a784e2e              265 Release
 SHA1:
- 6c24a10020a7fad1e26e2b7e3b9b8328875302c9              265 Release
+ 6d81bb40b7913e1e86a0a9e47eb11207cd548b44              265 Release
 SHA256:
- 3849a39c953a6671e61dcae08d6d24342ee78aa68145fb29dd36947b758ea14e              265 Release
+ 2728b0e64fe8f0d8b3a9a11a477e654b9c45120e42c95349920943111deaaf9f              265 Release
 SHA512:
- 3319474b4200ee2bb9fdb42cd3a074d433dd9f010b7584a495c9f69a57565cb0f280bc68f14bd0ecf7dd0540e8dc96d7486312c0e48c9a38700d2904338787f8              265 Release
+ c7d5a19c928fe687ae63538e06a035e33a6a565d9c9dc2a68921f246da55fa09efede63caf8f198a546ca3b5a3558dd22de0d2970bea674e985b536fd74298f3              265 Release
